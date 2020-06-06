@@ -1,5 +1,18 @@
-import * as React from 'react';
+import React from 'react';
+
+import Task from './task';
+import { Task as TaskModel } from '../models/Task';
+
+const task: TaskModel = {
+  id: 12,
+  text: 'Some random task to be completed',
+  date: new Date(),
+  completed: true,
+  monthly: false,
+};
 
 export const App = () => (
-  <h1>Hello world! For the second time now! :) With TS React!!!</h1>
+  <Task
+    task={task}
+  />
 );
