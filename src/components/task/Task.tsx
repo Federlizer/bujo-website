@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Task as TaskModel } from '../../models/Task';
+import { TaskStatus } from '../../models/Task';
 
 import Grid from '@material-ui/core/Grid';
 import CheckboxIcon from '@material-ui/icons/CheckBoxOutlineBlankOutlined';
@@ -11,21 +11,40 @@ import DeleteIcon from '@material-ui/icons/DeleteOutlined';
 import './styles.css';
 
 export interface TaskProps {
-  task: TaskModel;
+  task: {
+    id: number;
+    text: string;
+    date: Date;
+    status: TaskStatus;
+    monthly: boolean;
+  };
 
-  onComplete?: (e: Event) => void;
-  onAbandon?: (e: Event) => void;
-  onDelete?: (e: Event) => void;
+  updateTaskStatus: (status: TaskStatus) => void;
+  onDelete: (e: React.MouseEvent) => void;
 };
 
 const Task = (props: TaskProps) => {
-  const { task } = props;
+  const {
+    task,
 
-  const checkbox = (
-    task.completed
-      ? <CheckboxCompletedIcon />
-      : <CheckboxIcon />
-  );
+    updateTaskStatus,
+    onDelete,
+  } = props;
+
+  const checkbox = task.status === TaskStatus.COMPLETED
+    ? (
+      <CheckboxCompletedIcon
+        onClick={() => updateTaskStatus(TaskStatus.PENDING)}
+        className="icon"
+        fontSize="large"
+      />
+    ) : (
+      <CheckboxIcon
+        onClick={() => updateTaskStatus(TaskStatus.COMPLETED)}
+        className="icon"
+        fontSize="large"
+      />
+    );
 
   return (
     <Grid
@@ -34,9 +53,20 @@ const Task = (props: TaskProps) => {
       alignItems="center"
     >
       {checkbox}
+
       {task.text}
-      <CloseIcon />
-      <DeleteIcon />
+
+      <CloseIcon
+        onClick={() => updateTaskStatus(TaskStatus.ABANDONED)}
+        className="icon"
+        fontSize="large"
+      />
+
+      <DeleteIcon
+        onClick={onDelete}
+        className="icon"
+        fontSize="large"
+      />
     </Grid>
   );
 };
