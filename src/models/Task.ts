@@ -1,7 +1,13 @@
+export enum TaskStatus {
+  PENDING = 'pending',
+  COMPLETED = 'completed',
+  ABANDONED = 'abandoned',
+};
+
 export interface Task {
   id: number;
   text: string;
   date: Date;
-  completed: boolean;
+  status: TaskStatus;
   monthly: boolean;
 }
