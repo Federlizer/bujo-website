@@ -35,13 +35,11 @@ const Task = (props: TaskProps) => {
     ? (
       <CheckboxCompletedIcon
         onClick={() => updateTaskStatus(TaskStatus.PENDING)}
-        className="icon"
         fontSize="large"
       />
     ) : (
       <CheckboxIcon
         onClick={() => updateTaskStatus(TaskStatus.COMPLETED)}
-        className="icon"
         fontSize="large"
       />
     );
@@ -52,7 +50,9 @@ const Task = (props: TaskProps) => {
       container
       alignItems="center"
     >
-      {checkbox}
+      <div className="icon">
+        {checkbox}
+      </div>
 
       {task.text}
 
