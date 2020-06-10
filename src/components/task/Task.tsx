@@ -54,7 +54,9 @@ const Task = (props: TaskProps) => {
         {checkbox}
       </div>
 
-      {task.text}
+      <div className={task.status === TaskStatus.ABANDONED ? 'strikethrough' : ''}>
+        {task.text}
+      </div>
 
       <CloseIcon
         onClick={() => updateTaskStatus(TaskStatus.ABANDONED)}

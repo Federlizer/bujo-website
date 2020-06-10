@@ -1,3 +1,7 @@
 .task .icon:hover {
   cursor: pointer;
 }
+
+.task .strikethrough {
+  text-decoration: line-through;
+}
