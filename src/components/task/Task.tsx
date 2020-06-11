@@ -15,7 +15,7 @@ export interface TaskProps {
   task: Task;
 
   updateTaskStatus: (status: TaskStatus) => void;
-  onDelete: (e: React.MouseEvent) => void;
+  onDelete: () => void;
 };
 
 const TaskComponent = (props: TaskProps) => {
