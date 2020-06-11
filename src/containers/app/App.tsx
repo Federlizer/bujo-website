@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
 import TaskList from '../../components/taskList';
 
 import { Task, TaskStatus } from '../../models/Task';
@@ -84,15 +86,21 @@ class App extends React.Component<AppProps, AppState> {
   render () {
     const { tasks } = this.state;
 
+    const theme = createMuiTheme({
+      typography: {
+        fontSize: 24,
+      },
+    });
+
     return (
-      <div className="app">
+      <ThemeProvider theme={theme}>
         <TaskList
           tasks={tasks}
           header={'07 June'}
           updateTaskStatus={this.handleUpdateTaskStatus}
           deleteTask={this.handleDeleteTask}
         />
-      </div>
+      </ThemeProvider>
     );
   }
 }
