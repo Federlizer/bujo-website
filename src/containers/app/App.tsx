@@ -1,15 +1,52 @@
 import React from 'react';
 
-import Task from '../../components/task';
+import TaskList from '../../components/taskList';
 
-import { Task as TaskModel, TaskStatus } from '../../models/Task';
+import { Task, TaskStatus } from '../../models/Task';
 
 import './styles.css';
 
+const tasks = [
+  {
+    id: 1,
+    text: 'Task n1',
+    date: new Date(),
+    status: TaskStatus.PENDING,
+    monthly: false,
+  },
+  {
+    id: 2,
+    text: 'Task n2',
+    date: new Date(),
+    status: TaskStatus.PENDING,
+    monthly: false,
+  },
+  {
+    id: 3,
+    text: 'Task n3',
+    date: new Date(),
+    status: TaskStatus.PENDING,
+    monthly: false,
+  },
+  {
+    id: 4,
+    text: 'Task n4',
+    date: new Date(),
+    status: TaskStatus.PENDING,
+    monthly: false,
+  },
+  {
+    id: 5,
+    text: 'Task n5',
+    date: new Date(),
+    status: TaskStatus.PENDING,
+    monthly: false,
+  },
+];
+
 interface AppProps {}
 interface AppState {
-  i: number;
-  task: TaskModel;
+  tasks: Task[];
 }
 
 class App extends React.Component<AppProps, AppState> {
@@ -17,48 +54,43 @@ class App extends React.Component<AppProps, AppState> {
     super(props);
 
     this.state = {
-      i: 0,
-      task: {
-        id: 12,
-        text: 'Some random task to be completed',
-        date: new Date(),
-        status: TaskStatus.PENDING,
-        monthly: false,
-      },
+      tasks,
     };
 
     this.handleUpdateTaskStatus = this.handleUpdateTaskStatus.bind(this);
     this.handleDeleteTask = this.handleDeleteTask.bind(this);
   }
 
-  handleUpdateTaskStatus (newStatus: TaskStatus): void {
+  handleUpdateTaskStatus (taskId: number, newStatus: TaskStatus): void {
     this.setState((state) => {
       return {
-        i: state.i + 1,
-        task: {
-          ...state.task,
-          status: newStatus,
-        },
+        tasks: state.tasks.map((task) => {
+          if (task.id === taskId) {
+            return { ...task, status: newStatus };
+          }
+
+          return task;
+        }),
       };
     });
   }
 
-  handleDeleteTask (): void {
-    this.setState({ task: undefined });
+  handleDeleteTask (taskId: number): void {
+    this.setState((state) => ({
+      tasks: state.tasks.filter((task) => task.id !== taskId),
+    }));
   }
 
   render () {
-    const { task } = this.state;
-
-    console.log(task);
+    const { tasks } = this.state;
 
     return (
       <div className="app">
-        <Task
-          task={task}
+        <TaskList
+          tasks={tasks}
 
           updateTaskStatus={this.handleUpdateTaskStatus}
-          onDelete={this.handleDeleteTask}
+          deleteTask={this.handleDeleteTask}
         />
       </div>
     );
