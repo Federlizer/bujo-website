@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { TaskStatus } from '../../models/Task';
+import { Task, TaskStatus } from '../../models/Task';
 
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -12,19 +12,13 @@ import DeleteIcon from '@material-ui/icons/DeleteOutlined';
 import './styles.css';
 
 export interface TaskProps {
-  task: {
-    id: number;
-    text: string;
-    date: Date;
-    status: TaskStatus;
-    monthly: boolean;
-  };
+  task: Task;
 
   updateTaskStatus: (status: TaskStatus) => void;
   onDelete: (e: React.MouseEvent) => void;
 };
 
-const Task = (props: TaskProps) => {
+const TaskComponent = (props: TaskProps) => {
   const {
     task,
 
@@ -66,4 +60,4 @@ const Task = (props: TaskProps) => {
   );
 };
 
-export default Task;
+export default TaskComponent;
