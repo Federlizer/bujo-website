@@ -93,14 +93,16 @@ class App extends React.Component<AppProps, AppState> {
     });
 
     return (
-      <ThemeProvider theme={theme}>
-        <TaskList
-          tasks={tasks}
-          header={'07 June'}
-          updateTaskStatus={this.handleUpdateTaskStatus}
-          deleteTask={this.handleDeleteTask}
-        />
-      </ThemeProvider>
+      <React.StrictMode>
+        <ThemeProvider theme={theme}>
+          <TaskList
+            tasks={tasks}
+            header={'07 June'}
+            updateTaskStatus={this.handleUpdateTaskStatus}
+            deleteTask={this.handleDeleteTask}
+          />
+        </ThemeProvider>
+      </React.StrictMode>
     );
   }
 }
