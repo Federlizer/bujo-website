@@ -3,6 +3,7 @@ import React from 'react';
 import { Task, TaskStatus } from '../../models/Task';
 
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import CheckboxIcon from '@material-ui/icons/CheckBoxOutlineBlankOutlined';
 import CheckboxCompletedIcon from '@material-ui/icons/CheckBoxOutlined';
@@ -29,11 +30,11 @@ const TaskComponent = (props: TaskProps) => {
   const checkbox = task.status === TaskStatus.COMPLETED
     ? (
       <IconButton onClick={() => updateTaskStatus(TaskStatus.PENDING)} >
-        <CheckboxCompletedIcon fontSize="large" />
+        <CheckboxCompletedIcon />
       </IconButton>
     ) : (
       <IconButton onClick={() => updateTaskStatus(TaskStatus.COMPLETED)} >
-        <CheckboxIcon fontSize="large" />
+        <CheckboxIcon />
       </IconButton>
     );
 
@@ -45,16 +46,22 @@ const TaskComponent = (props: TaskProps) => {
     >
       {checkbox}
 
-      <div className={task.status === TaskStatus.ABANDONED ? 'strikethrough' : ''}>
+      <Typography
+        className={
+          task.status === TaskStatus.ABANDONED
+            ? 'strikethrough'
+            : ''
+        }
+      >
         {task.text}
-      </div>
+      </Typography>
 
       <IconButton onClick={() => updateTaskStatus(TaskStatus.ABANDONED)} >
-        <CloseIcon fontSize="large" />
+        <CloseIcon />
       </IconButton>
 
       <IconButton onClick={onDelete} >
-        <DeleteIcon fontSize="large" />
+        <DeleteIcon />
       </IconButton>
     </Grid>
   );
