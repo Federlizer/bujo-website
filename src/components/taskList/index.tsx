@@ -1,12 +1,14 @@
 import React from 'react';
 
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 
 import { Task, TaskStatus } from '../../models/Task';
 import TaskComponent from '../task/Task';
 
 export interface TaskListProps {
   tasks: Task[];
+  header: string;
 
   updateTaskStatus: (taskId: number, status: TaskStatus) => void;
   deleteTask: (taskId: number) => void;
@@ -15,12 +17,14 @@ export interface TaskListProps {
 const TaskList = (props: TaskListProps) => {
   const {
     tasks,
+    header,
     updateTaskStatus,
     deleteTask,
   } = props;
 
   return (
     <Grid container>
+      <Typography>{header}</Typography>
 
       {tasks.map((task: Task) => {
         return (

@@ -88,7 +88,7 @@ class App extends React.Component<AppProps, AppState> {
       <div className="app">
         <TaskList
           tasks={tasks}
-
+          header={'07 June'}
           updateTaskStatus={this.handleUpdateTaskStatus}
           deleteTask={this.handleDeleteTask}
         />
