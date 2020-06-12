@@ -24,7 +24,14 @@ const TaskList = (props: TaskListProps) => {
 
   return (
     <Grid container>
-      <Typography>{header}</Typography>
+      <Typography
+        paragraph
+        style={{
+          textDecoration: 'underline',
+        }}
+      >
+        {header}
+      </Typography>
 
       {tasks.map((task: Task) => {
         return (
