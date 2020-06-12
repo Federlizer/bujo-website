@@ -61,6 +61,27 @@ class App extends React.Component<AppProps, AppState> {
 
     this.handleUpdateTaskStatus = this.handleUpdateTaskStatus.bind(this);
     this.handleDeleteTask = this.handleDeleteTask.bind(this);
+    this.handleAddTask = this.handleAddTask.bind(this);
+  }
+
+  handleAddTask (text: string): void {
+    this.setState((state) => {
+      const newTask: Task = {
+        id: 10,
+        text,
+        date: new Date(),
+        status: TaskStatus.PENDING,
+        monthly: false,
+      };
+
+      return {
+        ...state,
+        tasks: [
+          ...state.tasks,
+          newTask,
+        ],
+      };
+    });
   }
 
   handleUpdateTaskStatus (taskId: number, newStatus: TaskStatus): void {
@@ -98,6 +119,7 @@ class App extends React.Component<AppProps, AppState> {
           <TaskList
             tasks={tasks}
             header={'07 June'}
+            addTask={this.handleAddTask}
             updateTaskStatus={this.handleUpdateTaskStatus}
             deleteTask={this.handleDeleteTask}
           />
