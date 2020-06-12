@@ -56,7 +56,16 @@ const TaskComponent = (props: TaskProps) => {
         {task.text}
       </Typography>
 
-      <IconButton onClick={() => updateTaskStatus(TaskStatus.ABANDONED)} >
+      <IconButton
+        onClick={() => {
+          if (task.status === TaskStatus.ABANDONED) {
+            updateTaskStatus(TaskStatus.PENDING);
+            return;
+          }
+
+          updateTaskStatus(TaskStatus.ABANDONED);
+        }}
+      >
         <CloseIcon />
       </IconButton>
 
