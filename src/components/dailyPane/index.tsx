@@ -11,7 +11,7 @@ import './styles.css';
 export interface DailyPaneProps {
   tasks: Task[];
 
-  addTask: (text: string) => void;
+  addTask: (text: string, dateString: string) => void;
   updateTaskStatus: (taskId: number, newStatus: TaskStatus) => void;
   deleteTask: (taskId: number) => void;
 }
@@ -27,7 +27,7 @@ export const DailyPane = (props: DailyPaneProps) => {
   const taskDateMap: { [dateString: string]: Task[] } = {};
 
   tasks.forEach((task) => {
-    const dateString = task.date.format('DD-MM-YYYY');
+    const dateString = task.date.format('YYYY-MM-DD');
 
     if (Object.prototype.hasOwnProperty.call(taskDateMap, dateString)) {
       const Ts = taskDateMap[dateString];
@@ -52,7 +52,7 @@ export const DailyPane = (props: DailyPaneProps) => {
             tasks={tasks}
             header={header}
 
-            addTask={addTask}
+            addTask={(text) => addTask(text, dateString)}
             updateTaskStatus={updateTaskStatus}
             deleteTask={deleteTask}
           />

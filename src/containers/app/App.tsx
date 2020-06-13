@@ -65,12 +65,12 @@ class App extends React.Component<AppProps, AppState> {
     this.handleAddTask = this.handleAddTask.bind(this);
   }
 
-  handleAddTask (text: string): void {
+  handleAddTask (text: string, dateString: string): void {
     this.setState((state) => {
       const newTask: Task = {
         id: 10,
         text,
-        date: dayjs(),
+        date: dayjs(dateString),
         status: TaskStatus.PENDING,
         monthly: false,
       };
