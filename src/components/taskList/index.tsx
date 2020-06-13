@@ -33,14 +33,14 @@ class TaskList extends React.Component<TaskListProps, TaskListState> {
       newTaskText: '',
     };
 
-    this.handleAdd = this.handleAdd.bind(this);
+    this.toggleAdding = this.toggleAdding.bind(this);
     this.handleNewTaskTextChange = this.handleNewTaskTextChange.bind(this);
   }
 
-  handleAdd () {
+  toggleAdding (adding: boolean) {
     this.setState((state) => ({
       ...state,
-      adding: true,
+      adding,
     }));
   }
 
@@ -64,8 +64,13 @@ class TaskList extends React.Component<TaskListProps, TaskListState> {
     } = this.props;
 
     return (
-      <Grid container>
+      <Grid
+        container
+        alignItems="flex-start"
+        direction="column"
+      >
         <Typography
+          display="inline"
           paragraph
           style={{
             borderBottom: '2px solid black',
@@ -93,15 +98,20 @@ class TaskList extends React.Component<TaskListProps, TaskListState> {
                 variant="standard"
                 onChange={this.handleNewTaskTextChange}
               />
-              <Button onClick={() => addTask(newTaskText)}>
+              <Button onClick={() => {
+                addTask(newTaskText);
+                this.toggleAdding(false);
+              }}>
                 Click me
               </Button>
             </Grid>
           )
           : (
-            <IconButton onClick={this.handleAdd}>
-              <AddIcon />
-            </IconButton>
+            <Grid item>
+              <IconButton onClick={() => this.toggleAdding(true)}>
+                <AddIcon />
+              </IconButton>
+            </Grid>
           )
         }
 
