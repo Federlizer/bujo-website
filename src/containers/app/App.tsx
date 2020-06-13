@@ -7,45 +7,9 @@ import DailyPane from '../../components/dailyPane';
 
 import { Task, TaskStatus } from '../../models/Task';
 
-import './styles.css';
+import { tasks } from './data';
 
-const tasks: Task[] = [
-  {
-    id: 1,
-    text: "Mom's birthday",
-    date: dayjs('2020-06-07'),
-    status: TaskStatus.PENDING,
-    monthly: false,
-  },
-  {
-    id: 2,
-    text: "Geri's birthday",
-    date: dayjs('2020-01-27'),
-    status: TaskStatus.PENDING,
-    monthly: false,
-  },
-  {
-    id: 3,
-    text: "My brother's birthday",
-    date: dayjs('2020-02-14'),
-    status: TaskStatus.PENDING,
-    monthly: false,
-  },
-  {
-    id: 4,
-    text: 'Task n4',
-    date: dayjs(),
-    status: TaskStatus.PENDING,
-    monthly: false,
-  },
-  {
-    id: 5,
-    text: 'Task n5',
-    date: dayjs(),
-    status: TaskStatus.PENDING,
-    monthly: false,
-  },
-];
+import './styles.css';
 
 interface AppProps {}
 interface AppState {
