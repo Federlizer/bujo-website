@@ -1,11 +1,16 @@
 import React from 'react';
 
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import AddIcon from '@material-ui/icons/Add';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import {
+  Grid,
+  Typography,
+  IconButton,
+  TextField,
+} from '@material-ui/core';
+
+import {
+  Add as AddIcon,
+  Check as CheckIcon,
+} from '@material-ui/icons';
 
 import { Task, TaskStatus } from '../../models/Task';
 import TaskComponent from '../task/Task';
@@ -94,16 +99,17 @@ class TaskList extends React.Component<TaskListProps, TaskListState> {
         { adding
           ? (
             <Grid item>
+              <IconButton onClick={() => {
+                addTask(newTaskText);
+                this.toggleAdding(false);
+              }}>
+                <CheckIcon />
+              </IconButton>
+
               <TextField
                 variant="standard"
                 onChange={this.handleNewTaskTextChange}
               />
-              <Button onClick={() => {
-                addTask(newTaskText);
-                this.toggleAdding(false);
-              }}>
-                Click me
-              </Button>
             </Grid>
           )
           : (
