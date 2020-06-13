@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
-import TaskList from '../../components/taskList';
+import DailyPane from '../../components/dailyPane';
 
 import { Task, TaskStatus } from '../../models/Task';
 
@@ -12,22 +12,22 @@ import './styles.css';
 const tasks: Task[] = [
   {
     id: 1,
-    text: 'Task n1',
-    date: dayjs(),
+    text: "Mom's birthday",
+    date: dayjs('2020-06-07'),
     status: TaskStatus.PENDING,
     monthly: false,
   },
   {
     id: 2,
-    text: 'Task n2',
-    date: dayjs(),
+    text: "Geri's birthday",
+    date: dayjs('2020-01-27'),
     status: TaskStatus.PENDING,
     monthly: false,
   },
   {
     id: 3,
-    text: 'Task n3',
-    date: dayjs(),
+    text: "My brother's birthday",
+    date: dayjs('2020-02-14'),
     status: TaskStatus.PENDING,
     monthly: false,
   },
@@ -117,9 +117,8 @@ class App extends React.Component<AppProps, AppState> {
     return (
       <React.StrictMode>
         <ThemeProvider theme={theme}>
-          <TaskList
+          <DailyPane
             tasks={tasks}
-            header={'07 June'}
             addTask={this.handleAddTask}
             updateTaskStatus={this.handleUpdateTaskStatus}
             deleteTask={this.handleDeleteTask}
