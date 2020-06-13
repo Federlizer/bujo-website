@@ -1,4 +1,5 @@
 import React from 'react';
+import dayjs from 'dayjs';
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
@@ -8,39 +9,39 @@ import { Task, TaskStatus } from '../../models/Task';
 
 import './styles.css';
 
-const tasks = [
+const tasks: Task[] = [
   {
     id: 1,
     text: 'Task n1',
-    date: new Date(),
+    date: dayjs(),
     status: TaskStatus.PENDING,
     monthly: false,
   },
   {
     id: 2,
     text: 'Task n2',
-    date: new Date(),
+    date: dayjs(),
     status: TaskStatus.PENDING,
     monthly: false,
   },
   {
     id: 3,
     text: 'Task n3',
-    date: new Date(),
+    date: dayjs(),
     status: TaskStatus.PENDING,
     monthly: false,
   },
   {
     id: 4,
     text: 'Task n4',
-    date: new Date(),
+    date: dayjs(),
     status: TaskStatus.PENDING,
     monthly: false,
   },
   {
     id: 5,
     text: 'Task n5',
-    date: new Date(),
+    date: dayjs(),
     status: TaskStatus.PENDING,
     monthly: false,
   },
@@ -69,7 +70,7 @@ class App extends React.Component<AppProps, AppState> {
       const newTask: Task = {
         id: 10,
         text,
-        date: new Date(),
+        date: dayjs(),
         status: TaskStatus.PENDING,
         monthly: false,
       };

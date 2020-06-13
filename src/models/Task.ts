@@ -1,3 +1,5 @@
+import { Dayjs } from 'dayjs';
+
 export enum TaskStatus {
   PENDING = 'pending',
   COMPLETED = 'completed',
@@ -7,7 +9,7 @@ export enum TaskStatus {
 export interface Task {
   id?: number;
   text: string;
-  date: Date;
+  date: Dayjs;
   status: TaskStatus;
   monthly: boolean;
 }
