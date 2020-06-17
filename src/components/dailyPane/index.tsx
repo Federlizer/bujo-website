@@ -5,6 +5,8 @@ import { Grid } from '@material-ui/core';
 import TaskList from '../taskList';
 
 import { Task, TaskStatus } from '../../models/Task';
+import { orderTasksByDate } from '../../utils/orderTasksByDate';
+import { categorizeTasks } from '../../utils/categorizeTasks';
 
 import './styles.css';
 
@@ -24,32 +26,16 @@ export const DailyPane = (props: DailyPaneProps) => {
     deleteTask,
   } = props;
 
-  const orderedTasks = tasks.sort((a, b) => {
-    if (a.date.isBefore(b.date)) return -1;
-    if (a.date.isAfter(b.date)) return 1;
-    return 0;
-  });
-
-  const taskDateMap: { [dateString: string]: Task[] } = {};
-
-  orderedTasks.forEach((task) => {
-    const dateString = task.date.format('YYYY-MM-DD');
-
-    if (Object.prototype.hasOwnProperty.call(taskDateMap, dateString)) {
-      const Ts = taskDateMap[dateString];
-      taskDateMap[dateString] = [...Ts, task];
-    } else {
-      taskDateMap[dateString] = [task];
-    }
-  });
+  const orderedTasks = orderTasksByDate(tasks);
+  const categorizedTasks = categorizeTasks(orderedTasks, 'YYYY-MM-DD');
 
   return (
     <Grid
       className="daily-pane"
       container
     >
-      {Object.keys(taskDateMap).map((dateString) => {
-        const tasks = taskDateMap[dateString];
+      {Object.keys(categorizedTasks).map((dateString) => {
+        const tasks = categorizedTasks[dateString];
         const header = tasks[0].date.format('DD MMMM');
 
         return (
