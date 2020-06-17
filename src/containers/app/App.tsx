@@ -1,9 +1,11 @@
 import React from 'react';
 import dayjs from 'dayjs';
 
+import { Grid } from '@material-ui/core';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import DailyPane from '../../components/dailyPane';
+import MonthlyPane from '../../components/monthlyPane';
 
 import { Task, TaskStatus } from '../../models/Task';
 
@@ -72,6 +74,9 @@ class App extends React.Component<AppProps, AppState> {
   render () {
     const { tasks } = this.state;
 
+    const monthlyTasks = tasks.filter((task) => task.monthly);
+    const dailyTasks = tasks.filter((task) => !task.monthly);
+
     const theme = createMuiTheme({
       typography: {
         fontSize: 24,
@@ -81,12 +86,21 @@ class App extends React.Component<AppProps, AppState> {
     return (
       <React.StrictMode>
         <ThemeProvider theme={theme}>
-          <DailyPane
-            tasks={tasks}
-            addTask={this.handleAddTask}
-            updateTaskStatus={this.handleUpdateTaskStatus}
-            deleteTask={this.handleDeleteTask}
-          />
+          <Grid
+            container
+            direction="row"
+            wrap="nowrap"
+          >
+            <MonthlyPane
+              tasks={monthlyTasks}
+            />
+            <DailyPane
+              tasks={dailyTasks}
+              addTask={this.handleAddTask}
+              updateTaskStatus={this.handleUpdateTaskStatus}
+              deleteTask={this.handleDeleteTask}
+            />
+          </Grid>
         </ThemeProvider>
       </React.StrictMode>
     );
