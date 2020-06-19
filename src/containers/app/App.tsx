@@ -16,6 +16,7 @@ import './styles.css';
 interface AppProps {}
 interface AppState {
   tasks: Task[];
+  monthsDisplayed: dayjs.Dayjs[];
 }
 
 class App extends React.Component<AppProps, AppState> {
@@ -24,11 +25,18 @@ class App extends React.Component<AppProps, AppState> {
 
     this.state = {
       tasks,
+      monthsDisplayed: [
+        dayjs(),
+        dayjs().add(1, 'month'),
+      ],
     };
 
     this.handleUpdateTaskStatus = this.handleUpdateTaskStatus.bind(this);
     this.handleDeleteTask = this.handleDeleteTask.bind(this);
     this.handleAddTask = this.handleAddTask.bind(this);
+
+    this.showNextMonth = this.showNextMonth.bind(this);
+    this.showPreviousMonth = this.showPreviousMonth.bind(this);
   }
 
   handleAddTask (text: string, dateString: string): void {
@@ -54,6 +62,7 @@ class App extends React.Component<AppProps, AppState> {
   handleUpdateTaskStatus (taskId: number, newStatus: TaskStatus): void {
     this.setState((state) => {
       return {
+        ...state,
         tasks: state.tasks.map((task) => {
           if (task.id === taskId) {
             return { ...task, status: newStatus };
@@ -67,15 +76,37 @@ class App extends React.Component<AppProps, AppState> {
 
   handleDeleteTask (taskId: number): void {
     this.setState((state) => ({
+      ...state,
       tasks: state.tasks.filter((task) => task.id !== taskId),
     }));
   }
 
-  render () {
-    const { tasks } = this.state;
+  showNextMonth (): void {
+    console.log('Called showNextMonth');
+    this.setState((state) => ({
+      ...state,
+      monthsDisplayed: state.monthsDisplayed.map((d) => d.add(1, 'month')),
+    }));
+  }
 
-    const monthlyTasks = tasks.filter((task) => task.monthly);
-    const dailyTasks = tasks.filter((task) => !task.monthly);
+  showPreviousMonth (): void {
+    console.log('Called showPreviousMonth');
+    this.setState((state) => ({
+      ...state,
+      monthsDisplayed: state.monthsDisplayed.map((d) => d.subtract(1, 'month')),
+    }));
+  }
+
+  render () {
+    const { tasks, monthsDisplayed } = this.state;
+
+    const displayedTasks = tasks.filter((task) => {
+      const taskMonthString = task.date.format('YYYY-MM');
+      return monthsDisplayed.some((d) => d.format('YYYY-MM') === taskMonthString);
+    });
+
+    const monthlyTasks = displayedTasks.filter((task) => task.monthly);
+    const dailyTasks = displayedTasks.filter((task) => !task.monthly);
 
     const theme = createMuiTheme({
       typography: {
@@ -93,6 +124,10 @@ class App extends React.Component<AppProps, AppState> {
           >
             <MonthlyPane
               tasks={monthlyTasks}
+              monthsDisplayed={monthsDisplayed}
+
+              onWheelUp={this.showPreviousMonth}
+              onWheelDown={this.showNextMonth}
             />
             <DailyPane
               tasks={dailyTasks}
