@@ -15,6 +15,7 @@ import './styles.css';
 
 interface AppProps {}
 interface AppState {
+  nextId: number;
   tasks: Task[];
   monthsDisplayed: dayjs.Dayjs[];
 }
@@ -24,6 +25,7 @@ class App extends React.Component<AppProps, AppState> {
     super(props);
 
     this.state = {
+      nextId: tasks.length + 1,
       tasks,
       monthsDisplayed: [
         dayjs(),
@@ -42,7 +44,7 @@ class App extends React.Component<AppProps, AppState> {
   handleAddTask (text: string, dateString: string, monthly = false): void {
     this.setState((state) => {
       const newTask: Task = {
-        id: 10,
+        id: state.nextId,
         text,
         date: dayjs(dateString),
         status: TaskStatus.PENDING,
@@ -51,6 +53,7 @@ class App extends React.Component<AppProps, AppState> {
 
       return {
         ...state,
+        nextId: state.nextId + 1,
         tasks: [
           ...state.tasks,
           newTask,
