@@ -7,18 +7,20 @@ import {
 
 import TaskList from '../taskList';
 
-import { Task } from '../../models/Task';
+import { Task, TaskStatus } from '../../models/Task';
 import { orderTasksByDate } from '../../utils/orderTasksByDate';
 
 export interface MonthlyPaneProps {
   tasks: Task[];
   monthsDisplayed: dayjs.Dayjs[];
 
+  addTask: (text: string, datestring: string) => void;
+  updateTaskStatus: (taskId: number, newStatus: TaskStatus) => void;
+  deleteTask: (taskId: number) => void;
+
   onWheelUp: () => void;
   onWheelDown: () => void;
 }
-
-const notImplemented = () => console.error('Not Implemented');
 
 const categorizeTasks = (monthsDisplayed: dayjs.Dayjs[], tasks: Task[], datestring: string) => {
   const categorizedTasks: { [datestring: string]: Task[] } = {};
@@ -41,6 +43,10 @@ export const MonthlyPane = (props: MonthlyPaneProps) => {
     tasks,
     monthsDisplayed,
 
+    addTask,
+    updateTaskStatus,
+    deleteTask,
+
     onWheelUp,
     onWheelDown,
   } = props;
@@ -60,7 +66,8 @@ export const MonthlyPane = (props: MonthlyPaneProps) => {
     >
       {Object.keys(categorizedTasks).map((datestring: string) => {
         const tasks = categorizedTasks[datestring];
-        const header = dayjs(`${datestring}-01`).format('MMMM');
+        const date = dayjs(`${datestring}-01`);
+        const header = date.format('MMMM');
 
         return (
           <TaskList
@@ -68,9 +75,9 @@ export const MonthlyPane = (props: MonthlyPaneProps) => {
             tasks={tasks}
             header={header}
 
-            addTask={() => notImplemented()}
-            updateTaskStatus={notImplemented}
-            deleteTask={notImplemented}
+            addTask={(text) => addTask(text, date.format('YYYY-MM-DD'))}
+            updateTaskStatus={updateTaskStatus}
+            deleteTask={deleteTask}
           />
         );
       })}

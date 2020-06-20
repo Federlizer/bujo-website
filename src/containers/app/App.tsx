@@ -39,14 +39,14 @@ class App extends React.Component<AppProps, AppState> {
     this.showPreviousMonth = this.showPreviousMonth.bind(this);
   }
 
-  handleAddTask (text: string, dateString: string): void {
+  handleAddTask (text: string, dateString: string, monthly = false): void {
     this.setState((state) => {
       const newTask: Task = {
         id: 10,
         text,
         date: dayjs(dateString),
         status: TaskStatus.PENDING,
-        monthly: false,
+        monthly,
       };
 
       return {
@@ -125,6 +125,10 @@ class App extends React.Component<AppProps, AppState> {
             <MonthlyPane
               tasks={monthlyTasks}
               monthsDisplayed={monthsDisplayed}
+
+              addTask={(text, datestring) => this.handleAddTask(text, datestring, true)}
+              updateTaskStatus={this.handleUpdateTaskStatus}
+              deleteTask={this.handleDeleteTask}
 
               onWheelUp={this.showPreviousMonth}
               onWheelDown={this.showNextMonth}
